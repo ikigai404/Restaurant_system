@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block title %}Home - Restaurant System{% endblock %}
 {% block content %}
-
-    <h1>Electronic Bill</h1>
-    <p style="font-size: 20px;">Thank you for your order! Here is your electronic bill:
-        <b style="color: #007bff;" >{{ order_number }}</b></p>
+<div style="font-family:monospace;">
+    <h1>INVOICE</h1>
+    <p>Thank you for your order! <br>E-Bill No:
+        <b style="color: #007bff; font-size: 25px;" >{{ order_number }}</b></p>
         {{ date }}
     </p>
 
@@ -33,7 +33,7 @@
     <p><strong style="color: red;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
 
     <br>
-
+</div>
     <a href="/">Back to Home</a>
 
 {% endblock %}
