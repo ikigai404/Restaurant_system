@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block title %}Place Order - Restaurant System{% endblock %}
+
+{% block content %}
+    <h1>Select Your Cuisine</h1>
+    <p>Please choose a food category to view our menu:</p>
+
+    <form action="/menu" method="GET">
+        <div class="cuisine-options">
+            <button type="submit" name="category" value="sri_lankan">Sri Lankan</button>
+            <button type="submit" name="category" value="italian">Italian</button>
+            <button type="submit" name="category" value="chinese">Chinese</button>
+            <button type="submit" name="category" value="thai">Thai</button>
+        </div>
+    </form>
+
+    <br>
+    <a href="/">Back to Home</a>
+{% endblock %}
+</html>

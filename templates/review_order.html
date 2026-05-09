@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}Home - Restaurant System{% endblock %}
+{% block content %}
+
+    <h1>Review Your Order</h1>
+    <p>Here is a summary of your selected items:</p>
+
+    {% for item in selected_items %}
+        <p>{{ item.name }} - Rs{{ "%.2f"|format(item.price) }}</p>
+    {% endfor %}
+    
+    <p><strong>Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+
+    <br>
+    
+    <button onclick="alert('Order confirmed! Thank you for dining with us.'); window.location.href='/';">Confirm Order</button>
+
+
+{% endblock %}
