@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+import random
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -16,11 +18,7 @@ def place_order():
 def menu():
     category = request.args.get('category') 
     
-    if category:    # Debugging statement
-        print(f"Received category: {category}") 
-    else:
-        print("No category received")  # Debugging statement
-    
+
     menu_items = [
         {"name": "rice and curry", "price": 300, "category": "sri_lankan"},
         {"name": "String Hoppers", "price": 300, "category": "sri_lankan"},
@@ -64,7 +62,7 @@ def order_summary():
     total_price = 0
     
     for item in selected_items:
-        name, price = item.split('|')
+        name, price = item.split('|', 1)
         price = int(price)
         quantity = int(request.form.get(f'quantity_{name}', 1))
         item_total = price * quantity
@@ -73,6 +71,30 @@ def order_summary():
         total_price += item_total
     
     return render_template('review_order.html', selected_items=order_details, total_price=total_price)
+
+@app.route('/ebill', methods=['GET', 'POST'])
+def ebill():    
+    # Renders ebill.html from the templates folder
+    selected_items = request.form.getlist('items')
+    
+    print(selected_items)
+    print("HEREEEEEEEE")
+    
+     
+    order_details = []
+    total_price = 0   
+    
+    for item in selected_items:
+
+        name, price, quantity = item.split('|', 2)
+        price = int(price)
+        quantity = int(quantity)
+        item_total = price * quantity
+        
+        order_details.append({'name': name, 'price': price, 'quantity': quantity, 'total': item_total})
+        total_price += item_total
+
+    return render_template('ebill.html', order_details=order_details, total_price=total_price, order_number=random.randint(1000, 9999), date=datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 
 if __name__ == '__main__':
     app.run(debug=True)

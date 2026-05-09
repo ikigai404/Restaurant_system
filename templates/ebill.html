@@ -2,8 +2,12 @@
 {% block title %}Home - Restaurant System{% endblock %}
 {% block content %}
 
-    <h1>Review Your Order</h1>
-    <p>Here is a summary of your selected items:</p>
+    <h1>Electronic Bill</h1>
+    <p style="font-size: 20px;">Thank you for your order! Here is your electronic bill:
+        <b style="color: #007bff;" >{{ order_number }}</b></p>
+        {{ date }}
+    </p>
+
 
     <table style="border-collapse: collapse; width: 100%; text-align: left;">
         <thead>
@@ -15,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for item in selected_items %}
+        {% for item in order_details %}
         <tr>
             <td style="padding: 8px;">{{ item.name }}</td>
             <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
@@ -26,19 +30,10 @@
         </tbody>
     </table>
     
-    <p><strong>Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+    <p><strong style="color: red;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
 
     <br>
-    
-    <form action="/ebill" method="POST" style="display: inline;">
-        {% for item in selected_items %}
-            <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}">
-        {% endfor %}
-        <button type="submit">Confirm Order</button>
-    </form>
-    
-    <form action="/place_order" method="get">
-        <button type="submit">Modify Order</button>
-    </form>
+
+    <a href="/">Back to Home</a>
 
 {% endblock %}
