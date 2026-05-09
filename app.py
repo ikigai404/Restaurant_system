@@ -15,6 +15,12 @@ def place_order():
 @app.route('/menu', methods=['GET', 'POST'])
 def menu():
     category = request.args.get('category') 
+    
+    if category:    # Debugging statement
+        print(f"Received category: {category}") 
+    else:
+        print("No category received")  # Debugging statement
+    
     menu_items = [
         {"name": "rice and curry", "price": 300, "category": "sri_lankan"},
         {"name": "String Hoppers", "price": 300, "category": "sri_lankan"},
@@ -41,11 +47,13 @@ def menu():
         {"name": "Tea", "price": 150, "category": "beverages"}
     ]
 
-    if category:
-        menu_items = [item for item in menu_items if item['category'] == category]
+    if category != 'all':
+        items = [item for item in menu_items if item['category'] == category]
+    else:
+        items = menu_items
 
     # Renders menu.html from the templates folder
-    return render_template('menu.html', items=menu_items, selected_category=category, beverages=beverages)
+    return render_template('menu.html', items= items, selected_category=category if not category == 'all' else None, beverages= beverages)
 
 @app.route('/review_order', methods=['GET', 'POST'])
 def order_summary():
@@ -56,11 +64,13 @@ def order_summary():
     total_price = 0
     
     for item in selected_items:
-        
         name, price = item.split('|')
         price = int(price)
-        order_details.append({'name': name, 'price': price})
-        total_price += price
+        quantity = int(request.form.get(f'quantity_{name}', 1))
+        item_total = price * quantity
+        
+        order_details.append({'name': name, 'price': price, 'quantity': quantity, 'total': item_total})
+        total_price += item_total
     
     return render_template('review_order.html', selected_items=order_details, total_price=total_price)
 

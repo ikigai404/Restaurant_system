@@ -5,15 +5,32 @@
     <h1>Review Your Order</h1>
     <p>Here is a summary of your selected items:</p>
 
-    {% for item in selected_items %}
-        <p>{{ item.name }} - Rs{{ "%.2f"|format(item.price) }}</p>
-    {% endfor %}
+    <table style="border-collapse: collapse; width: 100%; text-align: left;">
+        <thead>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <th style="padding: 8px;">Item</th>
+                <th style="padding: 8px;">Price</th>
+                <th style="padding: 8px;">Quantity</th>
+                <th style="padding: 8px;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in selected_items %}
+        <tr>
+            <td style="padding: 8px;">{{ item.name }}</td>
+            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
+            <td style="padding: 8px;">{{ item.quantity }}</td>
+            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     
     <p><strong>Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
 
     <br>
     
     <button onclick="alert('Order confirmed! Thank you for dining with us.'); window.location.href='/';">Confirm Order</button>
-
+<button onclick="window.location.href='/menu';">Modify Order</button>
 
 {% endblock %}
