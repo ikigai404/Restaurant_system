@@ -1,57 +1,58 @@
-
 {% extends "layout.html" %}
 {% block title %}Place Order - Restaurant System{% endblock %}
 
-{% block content %}  
-    <h1>{% if category == 'all' %}All Categories{% else %}{{ category|capitalize }} Menu{% endif %}</h1>
-    <p>Select the items you wish to order:</p>
+{% block content %}
+<h1>{% if category == 'all' %}All Categories{% else %}{{ category|capitalize }} Menu{% endif %}</h1>
+<p>Select the items you wish to order:</p>
 
-    <form action="/review_order" method="POST">
-        <input type="hidden" name="category" value="{{ category }}">
-        <table style="border-collapse: collapse; border: none;">
-            
-            {% for item in items %}
-                <tr>
-                    <td style="border: none; padding: 5px;">
-                        <input type="checkbox" name="selected_items" value="{{ item.name }}|{{ item.price }}" id="item_{{ loop.index }}">
-                    </td>
-                    <td style="border: none; padding: 5px;">
-                        <label for="item_{{ loop.index }}">
-                            {{ item.name }} - Rs {{ "%.2f"|format(item.price) }}
-                        </label>
-                    </td>
-                    <td style="border: none; padding: 5px;">
-                        <input type="number" name="quantity_{{ item.name }}" value="1" min="0" style="width: 50px;">
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+<form action="/review_order" method="POST">
+    <input type="hidden" name="category" value="{{ category }}">
+    <table style="border-collapse: collapse; border: none;">
 
-        {% if beverages %}
-            <h3>Beverages</h3>
-            <table style="border-collapse: collapse; border: none;">
-                {% for bev in beverages %}
-                    <tr>
-                        <td style="border: none; padding: 5px;">
-                            <input type="checkbox" name="selected_items" value="{{ bev.name }}|{{ bev.price }}" id="bev_{{ loop.index }}">
-                        </td>
-                        <td style="border: none; padding: 5px;">
-                            <label for="bev_{{ loop.index }}">
-                                {{ bev.name }} - Rs {{ "%.2f"|format(bev.price) }}
-                            </label>
-                        </td>
-                        <td style="border: none; padding: 5px;">
-                            <input type="number" name="quantity_{{ bev.name }}" value="1" min="0" style="width: 50px;">
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% endif %}
-        <br>
-        
-        <button type="submit" class="order-button">Review Order</button>
-    </form>
+        {% for item in items %}
+        <tr>
+            <td style="border: none; padding: 5px;">
+                <input type="checkbox" name="selected_items" value="{{ item.name }}|{{ item.price }}"
+                    id="item_{{ loop.index }}">
+            </td>
+            <td style="border: none; padding: 5px;">
+                <label for="item_{{ loop.index }}">
+                    {{ item.name }} - Rs {{ "%.2f"|format(item.price) }}
+                </label>
+            </td>
+            <td style="border: none; padding: 5px;">
+                <input type="number" name="quantity_{{ item.name }}" value="1" min="0" style="width: 50px;">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
+    {% if beverages %}
+    <h3>Beverages</h3>
+    <table style="border-collapse: collapse; border: none;">
+        {% for bev in beverages %}
+        <tr>
+            <td style="border: none; padding: 5px;">
+                <input type="checkbox" name="selected_items" value="{{ bev.name }}|{{ bev.price }}"
+                    id="bev_{{ loop.index }}">
+            </td>
+            <td style="border: none; padding: 5px;">
+                <label for="bev_{{ loop.index }}">
+                    {{ bev.name }} - Rs {{ "%.2f"|format(bev.price) }}
+                </label>
+            </td>
+            <td style="border: none; padding: 5px;">
+                <input type="number" name="quantity_{{ bev.name }}" value="1" min="0" style="width: 50px;">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
     <br>
-    <a href="/place_order">Back to Categories</a>
+
+    <button type="submit" class="order-button">Review Order</button>
+</form>
+
+<br>
+<a href="/place_order">Back to Categories</a>
 {% endblock %}

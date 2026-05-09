@@ -2,19 +2,19 @@
 {% block title %}Home - Restaurant System{% endblock %}
 {% block content %}
 
-    <h1>Review Your Order</h1>
-    <p>Here is a summary of your selected items:</p>
+<h1>Review Your Order</h1>
+<p>Here is a summary of your selected items:</p>
 
-    <table style="border-collapse: collapse; width: 100%; text-align: left;">
-        <thead>
-            <tr style="border-bottom: 1px solid #ddd;">
-                <th style="padding: 8px;">Item</th>
-                <th style="padding: 8px;">Price</th>
-                <th style="padding: 8px;">Quantity</th>
-                <th style="padding: 8px;">Total</th>
-            </tr>
-        </thead>
-        <tbody>
+<table style="border-collapse: collapse; width: 100%; text-align: left;">
+    <thead>
+        <tr style="border-bottom: 1px solid #ddd;">
+            <th style="padding: 8px;">Item</th>
+            <th style="padding: 8px;">Price</th>
+            <th style="padding: 8px;">Quantity</th>
+            <th style="padding: 8px;">Total</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for item in selected_items %}
         <tr>
             <td style="padding: 8px;">{{ item.name }}</td>
@@ -23,22 +23,22 @@
             <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
         </tr>
         {% endfor %}
-        </tbody>
-    </table>
-    
-    <p><strong>Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+    </tbody>
+</table>
 
-    <br>
-    
-    <form action="/ebill" method="POST" style="display: inline;">
-        {% for item in selected_items %}
-            <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}">
-        {% endfor %}
-        <button type="submit">Confirm Order</button>
-    </form>
-    
-    <form action="/place_order" method="get">
-        <button type="submit">Modify Order</button>
-    </form>
+<p><strong>Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+
+<br>
+
+<form action="/ebill" method="POST" style="display: inline;">
+    {% for item in selected_items %}
+    <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}">
+    {% endfor %}
+    <button type="submit">Confirm Order</button>
+</form>
+
+<form action="/place_order" method="get">
+    <button type="submit">Modify Order</button>
+</form>
 
 {% endblock %}

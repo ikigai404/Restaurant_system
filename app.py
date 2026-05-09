@@ -77,8 +77,8 @@ def ebill():
     # Renders ebill.html from the templates folder
     selected_items = request.form.getlist('items')
     
-    print(selected_items)
-    print("HEREEEEEEEE")
+    """print(selected_items)
+    print("HEREEEEEEEE")"""
     
      
     order_details = []

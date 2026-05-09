@@ -4,8 +4,9 @@
 <div style="font-family:monospace;">
     <h1>INVOICE</h1>
     <p>Thank you for your order! <br>E-Bill No:
-        <b style="color: #007bff; font-size: 25px;" >{{ order_number }}</b></p>
-        {{ date }}
+        <b style="color: #007bff; font-size: 25px;">{{ order_number }}</b>
+    </p>
+    {{ date }}
     </p>
 
 
@@ -19,21 +20,21 @@
             </tr>
         </thead>
         <tbody>
-        {% for item in order_details %}
-        <tr>
-            <td style="padding: 8px;">{{ item.name }}</td>
-            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
-            <td style="padding: 8px;">{{ item.quantity }}</td>
-            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
-        </tr>
-        {% endfor %}
+            {% for item in order_details %}
+            <tr>
+                <td style="padding: 8px;">{{ item.name }}</td>
+                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
+                <td style="padding: 8px;">{{ item.quantity }}</td>
+                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
-    
+
     <p><strong style="color: red;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
 
     <br>
 </div>
-    <a href="/">Back to Home</a>
+<a href="/">Back to Home</a>
 
 {% endblock %}
