@@ -1,16 +1,15 @@
 {% extends "layout.html" %}
 {% block title %}Home - Restaurant System{% endblock %}
 {% block content %}
-<div style="font-family:monospace;">
-    <h1>INVOICE</h1>
-    <p>Thank you for your order! <br>E-Bill No:
-        <b style="color: #007bff; font-size: 25px;">{{ order_number }}</b>
+    <center><br><br>
+    <h1 style="margin-bottom: 60px;">Electronic Bill</h1>
+    <p style="font-size: 20px; margin-bottom: 30px;">Thank you for your order!<br> Here is your electronic bill:
+        <b style="color: #b08d2a;">{{ order_number }}</b></p>
+        <p style="color: #7A7A7A; font-size: 14px;">{{ date }}</p>
     </p>
-    {{ date }}
-    </p>
+    <br>
 
-
-    <table style="border-collapse: collapse; width: 100%; text-align: left;">
+    <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px; color: #7a7a7a;">
         <thead>
             <tr style="border-bottom: 1px solid #ddd;">
                 <th style="padding: 8px;">Item</th>
@@ -20,21 +19,21 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in order_details %}
-            <tr>
-                <td style="padding: 8px;">{{ item.name }}</td>
-                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
-                <td style="padding: 8px;">{{ item.quantity }}</td>
-                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
-            </tr>
-            {% endfor %}
+        {% for item in order_details %}
+        <tr>
+            <td style="padding: 8px;">{{ item.name }}</td>
+            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
+            <td style="padding: 8px;">{{ item.quantity }}</td>
+            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
-
-    <p><strong style="color: red;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+    <br>
+    <p><strong style="color: #b08d2a;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
 
     <br>
-</div>
-<a href="/">Back to Home</a>
+    <a href="/">Back to Home</a>
+    </center><br><br><br>
 
 {% endblock %}
