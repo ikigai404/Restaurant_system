@@ -1,39 +1,52 @@
 {% extends "layout.html" %}
 {% block title %}Home - Restaurant System{% endblock %}
 {% block content %}
-<h1 style="margin-bottom: 60px;">INVOICE</h1>
-<p style="font-size: 15px; margin-bottom: 15px; text-align: left;">Thank you for your order!<br> Here is your electronic
-    bill:
-    <b style="color: #add974;">{{ order_number }}</b>
-</p>
-<p style="color: #7A7A7A; font-size: 14px;">{{ date }}</p>
-</p>
-<br>
+<div style="margin-left: 40px; margin-right: 40px;">
+    <h1 style="margin-bottom: 20px;">INVOICE</h1>
+    <p style="font-size: 15px; margin-bottom: 20px; text-align: left;">Thank you for your order!<br>
+        Order Number:
+        <b style="color: #3d973d;">{{ order_number }}</b>
+        <br>
+        <b style="color: #7A7A7A; font-size: 14px;">{{ date }}</b>
+    </p>
 
-<table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px; color: #7a7a7a;">
-    <thead>
-        <tr style="border-bottom: 1px solid #ddd;">
-            <th style="padding: 8px;">Item</th>
-            <th style="padding: 8px;">Price</th>
-            <th style="padding: 8px;">Quantity</th>
-            <th style="padding: 8px;">Total</th>
-        </tr>
-    </thead>
-    <tbody>
+    <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px; color: #7a7a7a;">
+        <thead>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <th style="padding: 8px;">Item</th>
+                <th style="padding: 8px;">Price</th>
+                <th style="padding: 8px;">Quantity</th>
+                <th style="padding: 8px;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_details %}
+            <tr>
+                <td style="padding: 8px;">{{ item.name }}</td>
+                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
+                <td style="padding: 8px;">{{ item.quantity }}</td>
+                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <p><strong style="color: #3d973d; font-size: 15px; text-align:left;">Total Price: Rs {{ "%.2f"|format(total_price)
+            }}</strong></p>
+
+    <br>
+    <form action="/download_invoice" method="POST" style="display:inline;">
+        <input type="hidden" name="order_number" value="{{ order_number }}">
+        <input type="hidden" name="date" value="{{ date }}">
         {% for item in order_details %}
-        <tr>
-            <td style="padding: 8px;">{{ item.name }}</td>
-            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
-            <td style="padding: 8px;">{{ item.quantity }}</td>
-            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
-        </tr>
+        <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}|{{ item.total }}">
         {% endfor %}
-    </tbody>
-</table>
-<br>
-<p><strong style="color: #add974; font-size: 15px;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+        <br>
 
-<br>
-<a href="/" class="btn btn-outline-success">Back to Home</a>
-
+        <button type="submit" class="btn btn-outline-success">
+            ⬇ Download Invoice
+        </button>
+    </form>
+    <a href="/" class="btn btn-outline-secondary">Return to Home</a>
+</div>
 {% endblock %}
