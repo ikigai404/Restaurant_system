@@ -1,23 +1,25 @@
 {% extends "layout.html" %}
 {% block title %}Home - Restaurant System{% endblock %}
 {% block content %}
-    <h1 style="margin-bottom: 60px;">INVOICE</h1>
-    <p style="font-size: 15px; margin-bottom: 15px; text-align: left;">Thank you for your order!<br> Here is your electronic bill:
-        <b style="color: #add974;">{{ order_number }}</b></p>
-        <p style="color: #7A7A7A; font-size: 14px;">{{ date }}</p>
-    </p>
-    <br>
+<h1 style="margin-bottom: 60px;">INVOICE</h1>
+<p style="font-size: 15px; margin-bottom: 15px; text-align: left;">Thank you for your order!<br> Here is your electronic
+    bill:
+    <b style="color: #add974;">{{ order_number }}</b>
+</p>
+<p style="color: #7A7A7A; font-size: 14px;">{{ date }}</p>
+</p>
+<br>
 
-    <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px; color: #7a7a7a;">
-        <thead>
-            <tr style="border-bottom: 1px solid #ddd;">
-                <th style="padding: 8px;">Item</th>
-                <th style="padding: 8px;">Price</th>
-                <th style="padding: 8px;">Quantity</th>
-                <th style="padding: 8px;">Total</th>
-            </tr>
-        </thead>
-        <tbody>
+<table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px; color: #7a7a7a;">
+    <thead>
+        <tr style="border-bottom: 1px solid #ddd;">
+            <th style="padding: 8px;">Item</th>
+            <th style="padding: 8px;">Price</th>
+            <th style="padding: 8px;">Quantity</th>
+            <th style="padding: 8px;">Total</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for item in order_details %}
         <tr>
             <td style="padding: 8px;">{{ item.name }}</td>
@@ -26,12 +28,12 @@
             <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
         </tr>
         {% endfor %}
-        </tbody>
-    </table>
-    <br>
-    <p><strong style="color: #add974; font-size: 15px;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+    </tbody>
+</table>
+<br>
+<p><strong style="color: #add974; font-size: 15px;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
 
-    <br>
-    <a href="/" class="btn btn-outline-success">Back to Home</a>
+<br>
+<a href="/" class="btn btn-outline-success">Back to Home</a>
 
 {% endblock %}
