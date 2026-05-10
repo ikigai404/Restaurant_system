@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 {% block title %}Home - Restaurant System{% endblock %}
 {% block content %}
-    <center><br><br>
-    <h1 style="margin-bottom: 60px;">Review Your Order</h1>
-    <p style="margin-bottom: 40px;">Here is a summary of your selected items:</p>
+<center><br><br>
+    <h1 style="margin-bottom: 60px;">Review Your Order.</h1>
+    <p style="margin-bottom: 40px; font-size: 15px; text-align: left;">Here is a summary of your selected items:</p>
+
 
     <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px; color: #7a7a7a;">
         <thead>
@@ -15,45 +16,38 @@
             </tr>
         </thead>
         <tbody>
-        {% for item in selected_items %}
-        <tr>
-            <td style="padding: 8px;">{{ item.name }}</td>
-            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
-            <td style="padding: 8px;">{{ item.quantity }}</td>
-            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
-        </tr>
-        {% endfor %}
+            {% if not selected_items %}
+            <tr>
+                <td colspan="4" style="padding: 8px; text-align: center;">No items selected.</td>
+            </tr>
+            {% else %}
+            {% for item in selected_items %}
+            <tr>
+                <td style="padding: 8px;">{{ item.name }}</td>
+                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
+                <td style="padding: 8px;">{{ item.quantity }}</td>
+                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
         </tbody>
     </table>
     <br>
-    <p style="color: #8c6a1f; font-size: 24px;"><strong>Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+    <div style="text-align: left; margin-left: 20px;">
+        <p style="font-size: 15px; color: red;"><strong>Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
 
-    <br>
-    
-    <form action="/ebill" method="POST" style="display: inline; 
-        {% for item in selected_items %}
-            <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}">
-        {% endfor %}
-	<style>
-	 .order button {
- 	 padding: 12px 20px;
- 	 margin: 8px;
-	 border: none;
- 	 border-radius: 10px;
- 	 cursor: pointer;
- 	 font-size: 18px;
- 	 background: linear-gradient(145deg, #111, #2b2b2b);
- 	 color: #d4af37;
-	 }
-	</style>	
-
-	<div class="order">
-        <button type="submit">Confirm Order</button>
-    </form>
-    
-    <form action="/place_order" method="get">
-        <button type="submit">Modify Order</button>
-    </form>
+        <br>
     </div>
-    </center><br><br><br>
+
+    <form action="/ebill" method="POST" style="display: inline; ">
+        {% for item in selected_items %}
+        <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}">
+        {% endfor %}
+        {% if selected_items %}
+        <button type="submit" class="btn btn-outline-success">Confirm Order</button>
+        {% endif %}
+    </form>
+
+    <a href="/place_order" class="btn btn-outline-secondary">Modify Order</a>
+</center><br><br><br>
 {% endblock %}
