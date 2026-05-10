@@ -43,7 +43,9 @@
         {% for item in selected_items %}
         <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}">
         {% endfor %}
+        {% if selected_items %}
         <button type="submit" class="btn btn-outline-success">Confirm Order</button>
+        {% endif %}
     </form>
 
     <a href="/place_order" class="btn btn-outline-secondary">Modify Order</a>
