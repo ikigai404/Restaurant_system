@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 {% block title %}Home - Restaurant System{% endblock %}
 {% block content %}
-    <center><br><br>
-    <h1 style="margin-bottom: 60px;">Electronic Bill</h1>
-    <p style="font-size: 20px; margin-bottom: 30px;">Thank you for your order!<br> Here is your electronic bill:
-        <b style="color: #b08d2a;">{{ order_number }}</b></p>
-        <p style="color: #7A7A7A; font-size: 14px;">{{ date }}</p>
+<div style="margin-left: 40px; margin-right: 40px;">
+    <h1 style="margin-bottom: 20px;">INVOICE</h1>
+    <p style="font-size: 15px; margin-bottom: 20px; text-align: left;">Thank you for your order!<br>
+        Order Number:
+        <b style="color: #3d973d;">{{ order_number }}</b>
+        <br>
+        <b style="color: #7A7A7A; font-size: 14px;">{{ date }}</b>
     </p>
-    <br>
 
     <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px; color: #7a7a7a;">
         <thead>
@@ -19,33 +20,33 @@
             </tr>
         </thead>
         <tbody>
-        {% for item in order_details %}
-        <tr>
-            <td style="padding: 8px;">{{ item.name }}</td>
-            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
-            <td style="padding: 8px;">{{ item.quantity }}</td>
-            <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
-        </tr>
-        {% endfor %}
+            {% for item in order_details %}
+            <tr>
+                <td style="padding: 8px;">{{ item.name }}</td>
+                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.price) }}</td>
+                <td style="padding: 8px;">{{ item.quantity }}</td>
+                <td style="padding: 8px;">Rs {{ "%.2f"|format(item.total) }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
     <br>
-    <p><strong style="color: #b08d2a;">Total Price: Rs {{ "%.2f"|format(total_price) }}</strong></p>
+    <p><strong style="color: #3d973d; font-size: 15px; text-align:left;">Total Price: Rs {{ "%.2f"|format(total_price)
+            }}</strong></p>
 
     <br>
-</div>
-<form action="/download_invoice" method="POST" style="display:inline;">
-    <input type="hidden" name="order_number" value="{{ order_number }}">
-    <input type="hidden" name="date" value="{{ date }}">
-    {% for item in order_details %}
-    <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}|{{ item.total }}">
-    {% endfor %}
-    <button type="submit" style="background-color:#2d773d; color:white; padding:10px 20px; border:none; cursor:pointer; font-size:14px; border-radius:5px;">
-        ⬇ Download Invoice PDF
-    </button>
-</form>
-<br><br>
-    <a href="/">Back to Home</a>
-    </center><br><br><br>
+    <form action="/download_invoice" method="POST" style="display:inline;">
+        <input type="hidden" name="order_number" value="{{ order_number }}">
+        <input type="hidden" name="date" value="{{ date }}">
+        {% for item in order_details %}
+        <input type="hidden" name="items" value="{{ item.name }}|{{ item.price }}|{{ item.quantity }}|{{ item.total }}">
+        {% endfor %}
+        <br>
 
+        <button type="submit" class="btn btn-outline-success">
+            ⬇ Download Invoice
+        </button>
+    </form>
+    <a href="/" class="btn btn-outline-secondary">Return to Home</a>
+</div>
 {% endblock %}
